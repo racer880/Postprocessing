@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from CreatePath import CreatePath
+from datenbank import DB
 
 
 class GUI(tk.Tk):
@@ -52,6 +53,9 @@ class GUI(tk.Tk):
         self.clear_widgets()
         self.create_home_widgets()
 
+    def goto_SQLinventory(self):
+        self.clear_widgets()
+        self.create_SQL_widgets()
     def goto_inventory(self):
         self.clear_widgets()
         self.create_excel_widgets()
@@ -69,12 +73,13 @@ class GUI(tk.Tk):
 
     def create_home_widgets(self):
         # Title
-        title_label = ttk.Label(self, text="Post Processing Tool"
+        title_label = ttk.Label(self, text="Post Processing Tool (v0.1)"
                                 , font=("Didot", 36), background="grey")
         title_label.grid(column=0, row=0, padx=5, pady=5, sticky=tk.NS, columnspan=4)
 
         # Modul_0
-        modul_0_button = ttk.Button(self, text="XXX", width=50)
+        modul_0_button = ttk.Button(self, text="Sensor in SQL-Liste hinzufügen"
+                                    , width=50, command=self.goto_SQLinventory)
         modul_0_button.grid(column=1, row=2, padx=5, pady=5, sticky=tk.NS, columnspan=2)
 
         # Modul_1
@@ -109,6 +114,47 @@ class GUI(tk.Tk):
         # Quit
         quit_button = ttk.Button(self, text="Abbrechen", width=50, command=self.quit)
         quit_button.grid(column=2, row=10, padx=5, pady=5, sticky=tk.NS, columnspan=2)
+
+    def create_SQL_widgets(self):
+        title_label = ttk.Label(self, text="Personendatenbank", background="grey")
+        title_label.grid(row=0, column=0)
+
+        empty_label = ttk.Label(self, text="", background="grey")
+        empty_label.grid(row=0, column=1)
+
+        surname_label = ttk.Label(self, text="Nachname", background="grey")
+        surname_label.grid(row=1)
+
+        name_label = ttk.Label(self, text="Vorname", background="grey")
+        name_label.grid(row=2)
+
+        modul_1_textfield = ttk.Entry(self)
+        modul_1_textfield.grid(row=1, column=1)
+
+        modul_2_textfield = ttk.Entry(self)
+        modul_2_textfield.grid(row=2, column=1)
+
+        button_set = ttk.Button(self, text='Eintrag DB', width=20, command=self.action_SQL)
+        button_set.grid(row=3, column=0, sticky=tk.W, pady=4)
+
+        button_kill = ttk.Button(self, text='Abbrechen', width=20, command=self.destroy)
+        button_kill.grid(row=3, column=1, sticky=tk.W, pady=4)
+
+        showcase_window = ttk.Text(self, height=4, width=40)
+
+        status_label = ttk.Label(self, text="")
+        status_label.grid(row=6, columnspan=2)
+
+        db = DB()
+
+        status_label.status['text'] = db.initDB()
+        result = db.leseDB()
+        showcase_window.insert(self.END, result[0])
+        showcase_window.grid(row=4, columnspan=2)
+        showcase_window.configure(state='disabled')
+        database_label = ttk.Label(self,text="")
+        database_label.grid(row=5, columnspan=2)
+        database_label['text'] = "Anzahl Datensätze: " + result[1]
 
     def create_excel_widgets(self):
         # Title
@@ -242,3 +288,15 @@ class GUI(tk.Tk):
                                   , modul_11_textfield, modul_13_textfield, modul_15_textfield):
         CreatePath(str(modul_2_textfield), str(modul_5_textfield), str(modul_7_textfield)
                    , str(modul_9_textfield), str(modul_11_textfield), str(modul_13_textfield), str(modul_15_textfield))
+
+    def action_SQL(self):
+        db = DB()
+        self.status['text'] = ""
+        db.schreibDB(self.nname.get(), self.vname.get())
+        self.anzeige.configure(state='normal')
+        result = db.leseDB()
+        self.anzeige.delete(1.0, self.END)
+        self.anzeige.insert(self.END, result[0])
+        self.anzeige.configure(state='disabled')
+        self.datensaetze['text'] = "Anzahl Datensätzer: " + result[1]
+
