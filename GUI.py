@@ -1,7 +1,9 @@
 import tkinter as tk
 from tkinter import ttk
 from CreatePath import CreatePath
-from datenbank import DB
+from Testing.Datenbankgui import Datenbankgui
+from Testing.CreateDiagramm import CreateDiagramm
+from Testing.datenbank import DB
 
 
 class GUI(tk.Tk):
@@ -56,6 +58,7 @@ class GUI(tk.Tk):
     def goto_SQLinventory(self):
         self.clear_widgets()
         self.create_SQL_widgets()
+
     def goto_inventory(self):
         self.clear_widgets()
         self.create_excel_widgets()
@@ -67,6 +70,9 @@ class GUI(tk.Tk):
     def goto_info(self):
         self.clear_widgets()
         self.create_info_widgets()
+
+    def goto_diagramm(self):
+        self.create_diagramm_widgets()
 
     # --------------------------------------------------------------------------------------------
     # Widgets-Layout
@@ -88,7 +94,7 @@ class GUI(tk.Tk):
         modul_1_button.grid(column=1, row=3, padx=5, pady=5, sticky=tk.NS, columnspan=2)
 
         # Modul_2
-        modul_2_button = ttk.Button(self, text="XXX", width=50)
+        modul_2_button = ttk.Button(self, text="Nachbearbeitung der Daten", width=50)
         modul_2_button.grid(column=1, row=4, padx=5, pady=5, sticky=tk.NS, columnspan=2)
 
         # Modul_0
@@ -96,7 +102,8 @@ class GUI(tk.Tk):
         modul_4_button.grid(column=1, row=5, padx=5, pady=5, sticky=tk.NS, columnspan=2)
 
         # Modul_3
-        modul_5_button = ttk.Button(self, text="Diagramm erstellen", width=50)
+        modul_5_button = ttk.Button(self, text="Diagramm erstellen"
+                                    , width=50, command=self.goto_diagramm)
         modul_5_button.grid(column=1, row=6, padx=5, pady=5, sticky=tk.NS, columnspan=2)
 
         # Modul_4
@@ -140,21 +147,8 @@ class GUI(tk.Tk):
         button_kill = ttk.Button(self, text='Abbrechen', width=20, command=self.destroy)
         button_kill.grid(row=3, column=1, sticky=tk.W, pady=4)
 
-        showcase_window = ttk.Text(self, height=4, width=40)
-
         status_label = ttk.Label(self, text="")
         status_label.grid(row=6, columnspan=2)
-
-        db = DB()
-
-        status_label.status['text'] = db.initDB()
-        result = db.leseDB()
-        showcase_window.insert(self.END, result[0])
-        showcase_window.grid(row=4, columnspan=2)
-        showcase_window.configure(state='disabled')
-        database_label = ttk.Label(self,text="")
-        database_label.grid(row=5, columnspan=2)
-        database_label['text'] = "Anzahl Datensätze: " + result[1]
 
     def create_excel_widgets(self):
         # Title
@@ -281,6 +275,10 @@ class GUI(tk.Tk):
         info_button = ttk.Button(self, text="Zurück", width=50, command=self.goto_home)
         info_button.grid(column=1, row=10, padx=5, pady=5, sticky=tk.NS, columnspan=2)
 
+    def create_diagramm_widgets(self, ):
+        CreateDiagramm(self)
+
+
     # --------------------------------------------------------------------------------------------
     # Connectivity to other Classes
 
@@ -290,13 +288,15 @@ class GUI(tk.Tk):
                    , str(modul_9_textfield), str(modul_11_textfield), str(modul_13_textfield), str(modul_15_textfield))
 
     def action_SQL(self):
-        db = DB()
-        self.status['text'] = ""
-        db.schreibDB(self.nname.get(), self.vname.get())
-        self.anzeige.configure(state='normal')
-        result = db.leseDB()
-        self.anzeige.delete(1.0, self.END)
-        self.anzeige.insert(self.END, result[0])
-        self.anzeige.configure(state='disabled')
-        self.datensaetze['text'] = "Anzahl Datensätzer: " + result[1]
+        Datenbankgui()
+
+        #db = DB()
+        #self.status['text'] = ""
+        #db.schreibDB(self.nname.get(), self.vname.get())
+        #self.anzeige.configure(state='normal')
+        #result = db.leseDB()
+        #self.anzeige.delete(1.0, self.END)
+        #self.anzeige.insert(self.END, result[0])
+        #self.anzeige.configure(state='disabled')
+        #self.datensaetze['text'] = "Anzahl Datensätzer: " + result[1]
 

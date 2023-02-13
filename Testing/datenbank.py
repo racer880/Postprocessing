@@ -3,8 +3,8 @@ import os.path
 
 class DB:
     def initDB(self):
-        if not os.path.exists('sqldb.db'):
-            connection=sqlite3.connect('sqldb.db')
+        if not os.path.exists('../Files/sqldb.db'):
+            connection=sqlite3.connect('../Files/sqldb.db')
             cursor=connection.cursor()
             cursor.execute(
                 '''CREATE TABLE personen(name TEXT, vorname TEXT)''')
@@ -15,8 +15,8 @@ class DB:
     def leseDB(self):
         dbString=""
         counter = 0
-        if os.path.exists('sqldb.db'):
-            connection=sqlite3.connect('sqldb.db')
+        if os.path.exists('../Files/sqldb.db'):
+            connection=sqlite3.connect('../Files/sqldb.db')
             cursor=connection.cursor()
             cursor.execute('''SELECT * FROM personen''')
             rows=cursor.fetchall()
@@ -31,8 +31,8 @@ class DB:
         return dbString
 
     def schreibDB(self,n,v):
-        if os.path.exists('sqldb.db'):
-            connection=sqlite3.connect('sqldb.db')
+        if os.path.exists('../Files/sqldb.db'):
+            connection=sqlite3.connect('../Files/sqldb.db')
             cursor=connection.cursor()
             cursor.execute(
                 '''INSERT INTO personen VALUES(?,?)''',(n,v))

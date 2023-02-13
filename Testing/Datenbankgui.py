@@ -1,4 +1,4 @@
-from datenbank import *
+from Testing.datenbank import *
 from tkinter import *
 
 class Datenbankgui(Frame):
@@ -17,7 +17,7 @@ class Datenbankgui(Frame):
         Button(master,text='Eintrag DB',width=20,command=self.action).grid(
             row=3, column=0, sticky=W, pady=4)
 
-        Button(master,text='Abbrechen',width=20,command=root.destroy).grid(
+        Button(master,text='Abbrechen',width=20,command=self.destroy).grid(
             row=3, column=1, sticky=W, pady=4)
 
         self.nname.grid(row=1, column=1)
@@ -48,9 +48,9 @@ class Datenbankgui(Frame):
         self.anzeige.configure(state='disabled')
         self.datensaetze['text'] = "Anzahl Datensätzer: " + result[1]
 
-root=Tk()
-app=Datenbankgui(master=root)
-app.mainloop()
+#root=Tk()
+#app=Datenbankgui(master=root)
+#app.mainloop()
 
 
 
