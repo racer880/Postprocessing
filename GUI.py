@@ -1,8 +1,10 @@
+import os
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, filedialog
 from CreatePath import CreatePath
 from Testing.Datenbankgui import Datenbankgui
 from Testing.CreateDiagramm import CreateDiagramm
+from Testing.StartVideo import StartVideo
 from Testing.datenbank import DB
 
 
@@ -67,6 +69,10 @@ class GUI(tk.Tk):
         self.clear_widgets()
         self.create_filepath_widgets()
 
+    def goto_videopath(self):
+        self.clear_widgets()
+        self.create_video_widgets()
+
     def goto_info(self):
         self.clear_widgets()
         self.create_info_widgets()
@@ -111,7 +117,8 @@ class GUI(tk.Tk):
         modul_6_button.grid(column=1, row=7, padx=5, pady=5, sticky=tk.NS, columnspan=2)
 
         # Modul_0
-        modul_7_button = ttk.Button(self, text="XXX", width=50)
+        modul_7_button = ttk.Button(self, text="Konservierter Versuch durchführen"
+                                    , width=50, command=self.goto_videopath)
         modul_7_button.grid(column=1, row=8, padx=5, pady=5, sticky=tk.NS, columnspan=2)
 
         # Info
@@ -141,7 +148,7 @@ class GUI(tk.Tk):
         modul_2_textfield = ttk.Entry(self)
         modul_2_textfield.grid(row=2, column=1)
 
-        button_set = ttk.Button(self, text='Eintrag DB', width=20, command=self.action_SQL)
+        button_set = ttk.Button(self, text='Eintrag DB', width=20, command=self.call_database_class)
         button_set.grid(row=3, column=0, sticky=tk.W, pady=4)
 
         button_kill = ttk.Button(self, text='Abbrechen', width=20, command=self.destroy)
@@ -169,7 +176,7 @@ class GUI(tk.Tk):
 
     def create_filepath_widgets(self):
         # Textvariablen
-        current_file = "C:/Users/patrick.grubert/PycharmProjects/Postprocessing"
+        current_file = os.getcwd()
         project_name = "Projektname:"
         folder_1 = "0. Metadaten"
         folder_2 = "1. Skripte"
@@ -287,6 +294,84 @@ class GUI(tk.Tk):
     def create_diagramm_widgets(self, ):
         CreateDiagramm(self)
 
+    def create_video_widgets(self):
+        # Select right folder for syncronized videos
+        def browse_path():
+            filename = filedialog.askdirectory()
+            modul_2_textfield.delete(0,"end")
+            modul_2_textfield.insert(0, str(filename))
+
+        # testvariable
+        current_file = os.getcwd()
+        videoname_1 = "Test.mp4"
+        videoname_2 = "Test_2.mp4"
+        videoname_3 = "Test_3.mp4"
+        videoname_4 = "Test_4.mp4"
+
+        # Title
+        title_label = ttk.Label(self, text="Konservierter Versuch durchführen", font=("Didot", 24), background="grey")
+        title_label.grid(column=0, row=0, padx=5, pady=5, sticky=tk.NS, columnspan=4)
+
+        # Label_1
+        modul_1_label = ttk.Label(self, text="Projektpfad:", width=50, background="grey")
+        modul_1_label.grid(column=0, row=2, padx=5, pady=5, sticky=tk.E)
+
+        # Textfields_1
+        modul_2_textfield = ttk.Entry(self)
+        modul_2_textfield.insert(0, current_file)
+        modul_2_textfield.grid(column=1, row=2, padx=5, pady=5, columnspan=3, sticky=tk.EW)
+
+        # Button 1
+        info_button1 = ttk.Button(self, text="Ordner suchen", width=50, command=browse_path)
+        info_button1.grid(column=1, row=3, padx=250, pady=5, ipadx=10, ipady=10, columnspan=3, sticky=tk.EW)
+
+        # Label_3
+        modul_4_label = ttk.Label(self, text="Video 1", width=50, background="grey")
+        modul_4_label.grid(column=0, row=4, padx=5, pady=5, sticky=tk.E)
+
+        # Textfields_2
+        modul_5_textfield = ttk.Entry(self)
+        modul_5_textfield.insert(0, videoname_1)
+        modul_5_textfield.grid(column=1, row=4, padx=5, pady=5, columnspan=3, sticky=tk.EW)
+
+        # Label_4
+        modul_6_label = ttk.Label(self, text= "Video 2" , width=50, background="grey")
+        modul_6_label.grid(column=0, row=5, padx=5, pady=5, sticky=tk.E)
+
+        # Textfields_3
+        modul_7_textfield = ttk.Entry(self)
+        modul_7_textfield.insert(0, videoname_2)
+        modul_7_textfield.grid(column=1, row=5, padx=5, pady=5, columnspan=3, sticky=tk.EW)
+
+        # Label_4
+        modul_8_label = ttk.Label(self, text= "Video 3" , width=50, background="grey")
+        modul_8_label.grid(column=0, row=6, padx=5, pady=5, sticky=tk.E)
+
+        # Textfields_5
+        modul_9_textfield = ttk.Entry(self)
+        modul_9_textfield.insert(0, videoname_3)
+        modul_9_textfield.grid(column=1, row=6, padx=5, pady=5, columnspan=3, sticky=tk.EW)
+
+        # Label_4
+        modul_10_label = ttk.Label(self, text= "Video 4" , width=50, background="grey")
+        modul_10_label.grid(column=0, row=7, padx=5, pady=5, sticky=tk.E)
+
+        # Textfields_6
+        modul_11_textfield = ttk.Entry(self)
+        modul_11_textfield.insert(0, videoname_4)
+        modul_11_textfield.grid(column=1, row=7, padx=5, pady=5, columnspan=3, sticky=tk.EW)
+
+        # Erstellen
+        info_button = ttk.Button(self, text="Video starten", width=50, command=lambda: self.callStartVideo(
+            modul_2_textfield.get(), modul_5_textfield.get(), modul_7_textfield.get(), modul_9_textfield.get()
+            , modul_11_textfield.get()))
+        info_button.grid(column=1, row=10, padx=5, pady=5, sticky=tk.NS)
+
+        # Zurück
+        info_button = ttk.Button(self, text="Zurück", width=50, command=self.goto_home)
+        info_button.grid(column=2, row=10, padx=5, pady=5, sticky=tk.NS, columnspan=2)
+
+
 
     # --------------------------------------------------------------------------------------------
     # Connectivity to other Classes
@@ -296,16 +381,20 @@ class GUI(tk.Tk):
         CreatePath(str(modul_2_textfield), str(modul_5_textfield), str(modul_7_textfield)
                    , str(modul_9_textfield), str(modul_11_textfield), str(modul_13_textfield), str(modul_15_textfield))
 
-    def action_SQL(self):
+    def call_database_class(self):
         Datenbankgui()
 
-        #db = DB()
-        #self.status['text'] = ""
-        #db.schreibDB(self.nname.get(), self.vname.get())
-        #self.anzeige.configure(state='normal')
-        #result = db.leseDB()
-        #self.anzeige.delete(1.0, self.END)
-        #self.anzeige.insert(self.END, result[0])
-        #self.anzeige.configure(state='disabled')
-        #self.datensaetze['text'] = "Anzahl Datensätzer: " + result[1]
+        # db = DB()
+        # self.status['text'] = ""
+        # db.schreibDB(self.nname.get(), self.vname.get())
+        # self.anzeige.configure(state='normal')
+        # result = db.leseDB()
+        # self.anzeige.delete(1.0, self.END)
+        # self.anzeige.insert(self.END, result[0])
+        # self.anzeige.configure(state='disabled')
+        # self.datensaetze['text'] = "Anzahl Datensätzer: " + result[1]
 
+    def callStartVideo(self, modul_2_textfield, modul_5_textfield, modul_7_textfield, modul_9_textfield
+                                  , modul_11_textfield):
+        StartVideo(str(modul_2_textfield), str(modul_5_textfield), str(modul_7_textfield),
+                   str(modul_9_textfield), str(modul_11_textfield))
