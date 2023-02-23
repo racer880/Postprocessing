@@ -2,9 +2,12 @@ import sqlite3
 import os.path
 
 class DB:
-    def initDB(self):
-        if not os.path.exists('../Files/sqldb.db'):
-            connection=sqlite3.connect('../Files/sqldb.db')
+
+# Todo: Parameter "file" need to be used
+
+    def initDB(self, file):
+        if not os.path.exists(file):
+            connection=sqlite3.connect(file)
             cursor=connection.cursor()
             cursor.execute(
                 '''CREATE TABLE personen(name TEXT, vorname TEXT)''')

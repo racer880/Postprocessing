@@ -4,10 +4,6 @@ import cv2
 
 class StartVideo():
     def __init__(self, path, video_1, video_2, video_3, video_4):
-
-
-
-
         #input
         names = [str(path) + "\\" + str(video_1), str(path) + "\\" + str(video_2), str(path)
                  + "\\" + str(video_3), str(path) + "\\" + str(video_4)]

@@ -6,6 +6,7 @@ from Testing.Datenbankgui import Datenbankgui
 from Testing.CreateDiagramm import CreateDiagramm
 from Testing.StartVideo import StartVideo
 from Testing.datenbank import DB
+from PIL import Image, ImageTk
 
 
 class GUI(tk.Tk):
@@ -78,14 +79,14 @@ class GUI(tk.Tk):
         self.create_info_widgets()
 
     def goto_diagramm(self):
+        self.clear_widgets()
         self.create_diagramm_widgets()
 
     # --------------------------------------------------------------------------------------------
     # Widgets-Layout
 
     def create_home_widgets(self):
-        # Title
-        title_label = ttk.Label(self, text="Post Processing Tool (v0.1)"
+        title_label = ttk.Label(self, text="Post Processing Tool"
                                 , font=("Didot", 36), background="grey")
         title_label.grid(column=0, row=0, padx=5, pady=5, sticky=tk.NS, columnspan=4)
 
@@ -151,7 +152,7 @@ class GUI(tk.Tk):
         button_set = ttk.Button(self, text='Eintrag DB', width=20, command=self.call_database_class)
         button_set.grid(row=3, column=0, sticky=tk.W, pady=4)
 
-        button_kill = ttk.Button(self, text='Abbrechen', width=20, command=self.destroy)
+        button_kill = ttk.Button(self, text="Zurück", width=20, command=self.goto_home)
         button_kill.grid(row=3, column=1, sticky=tk.W, pady=4)
 
         status_label = ttk.Label(self, text="")
@@ -175,15 +176,6 @@ class GUI(tk.Tk):
         info_button.grid(column=1, row=10, padx=5, pady=5, sticky=tk.NS, columnspan=2)
 
     def create_filepath_widgets(self):
-        # Textvariablen
-        current_file = os.getcwd()
-        project_name = "Projektname:"
-        folder_1 = "0. Metadaten"
-        folder_2 = "1. Skripte"
-        folder_3 = "2. Analysen"
-        folder_4 = "3. Videos"
-        folder_5 = "4. Mehr"
-
         # Title
         title_label = ttk.Label(self, text="Projektpfad erstellen", font=("Didot", 24), background="grey")
         title_label.grid(column=0, row=0, padx=5, pady=5, sticky=tk.NS, columnspan=4)
@@ -194,11 +186,11 @@ class GUI(tk.Tk):
 
         # Textfields_1
         modul_2_textfield = ttk.Entry(self)
-        modul_2_textfield.insert(0, current_file)
+        modul_2_textfield.insert(0, os.getcwd())
         modul_2_textfield.grid(column=1, row=2, padx=5, pady=5, columnspan=3, sticky=tk.EW)
 
         # Label_3
-        modul_4_label = ttk.Label(self, text=project_name, width=50, background="grey")
+        modul_4_label = ttk.Label(self, text="Projektname:", width=50, background="grey")
         modul_4_label.grid(column=0, row=3, padx=5, pady=5, sticky=tk.E)
 
         # Textfields_2
@@ -212,7 +204,7 @@ class GUI(tk.Tk):
 
         # Textfields_3
         modul_7_textfield = ttk.Entry(self)
-        modul_7_textfield.insert(0, folder_1)
+        modul_7_textfield.insert(0, "0. Metadaten")
         modul_7_textfield.grid(column=1, row=4, padx=5, pady=5, columnspan=3, sticky=tk.EW)
 
         # Label_4
@@ -221,7 +213,7 @@ class GUI(tk.Tk):
 
         # Textfields_5
         modul_9_textfield = ttk.Entry(self)
-        modul_9_textfield.insert(0, folder_2)
+        modul_9_textfield.insert(0, "1. Skripte")
         modul_9_textfield.grid(column=1, row=5, padx=5, pady=5, columnspan=3, sticky=tk.EW)
 
         # Label_4
@@ -230,7 +222,7 @@ class GUI(tk.Tk):
 
         # Textfields_6
         modul_11_textfield = ttk.Entry(self)
-        modul_11_textfield.insert(0, folder_3)
+        modul_11_textfield.insert(0, "2. Analysen")
         modul_11_textfield.grid(column=1, row=6, padx=5, pady=5, columnspan=3, sticky=tk.EW)
 
         # Label_5
@@ -239,7 +231,7 @@ class GUI(tk.Tk):
 
         # Textfields_7
         modul_13_textfield = ttk.Entry(self)
-        modul_13_textfield.insert(0, folder_4)
+        modul_13_textfield.insert(0, "3. Videos")
         modul_13_textfield.grid(column=1, row=7, padx=5, pady=5, columnspan=3, sticky=tk.EW)
 
         # Label_6
@@ -248,7 +240,7 @@ class GUI(tk.Tk):
 
         # Textfields_8
         modul_15_textfield = ttk.Entry(self)
-        modul_15_textfield.insert(0, folder_5)
+        modul_15_textfield.insert(0, "4. Mehr")
         modul_15_textfield.grid(column=1, row=8, padx=5, pady=5, columnspan=3, sticky=tk.EW)
 
         # Erstellen
@@ -298,7 +290,7 @@ class GUI(tk.Tk):
         # Select right folder for syncronized videos
         def browse_path():
             filename = filedialog.askdirectory()
-            modul_2_textfield.delete(0,"end")
+            modul_2_textfield.delete(0, "end")
             modul_2_textfield.insert(0, str(filename))
 
         # testvariable
@@ -335,7 +327,7 @@ class GUI(tk.Tk):
         modul_5_textfield.grid(column=1, row=4, padx=5, pady=5, columnspan=3, sticky=tk.EW)
 
         # Label_4
-        modul_6_label = ttk.Label(self, text= "Video 2" , width=50, background="grey")
+        modul_6_label = ttk.Label(self, text="Video 2", width=50, background="grey")
         modul_6_label.grid(column=0, row=5, padx=5, pady=5, sticky=tk.E)
 
         # Textfields_3
@@ -344,7 +336,7 @@ class GUI(tk.Tk):
         modul_7_textfield.grid(column=1, row=5, padx=5, pady=5, columnspan=3, sticky=tk.EW)
 
         # Label_4
-        modul_8_label = ttk.Label(self, text= "Video 3" , width=50, background="grey")
+        modul_8_label = ttk.Label(self, text="Video 3", width=50, background="grey")
         modul_8_label.grid(column=0, row=6, padx=5, pady=5, sticky=tk.E)
 
         # Textfields_5
@@ -353,7 +345,7 @@ class GUI(tk.Tk):
         modul_9_textfield.grid(column=1, row=6, padx=5, pady=5, columnspan=3, sticky=tk.EW)
 
         # Label_4
-        modul_10_label = ttk.Label(self, text= "Video 4" , width=50, background="grey")
+        modul_10_label = ttk.Label(self, text="Video 4", width=50, background="grey")
         modul_10_label.grid(column=0, row=7, padx=5, pady=5, sticky=tk.E)
 
         # Textfields_6
@@ -371,8 +363,6 @@ class GUI(tk.Tk):
         info_button = ttk.Button(self, text="Zurück", width=50, command=self.goto_home)
         info_button.grid(column=2, row=10, padx=5, pady=5, sticky=tk.NS, columnspan=2)
 
-
-
     # --------------------------------------------------------------------------------------------
     # Connectivity to other Classes
 
@@ -381,8 +371,8 @@ class GUI(tk.Tk):
         CreatePath(str(modul_2_textfield), str(modul_5_textfield), str(modul_7_textfield)
                    , str(modul_9_textfield), str(modul_11_textfield), str(modul_13_textfield), str(modul_15_textfield))
 
-    def call_database_class(self):
-        Datenbankgui()
+
+
 
         # db = DB()
         # self.status['text'] = ""
@@ -395,6 +385,6 @@ class GUI(tk.Tk):
         # self.datensaetze['text'] = "Anzahl Datensätzer: " + result[1]
 
     def callStartVideo(self, modul_2_textfield, modul_5_textfield, modul_7_textfield, modul_9_textfield
-                                  , modul_11_textfield):
+                       , modul_11_textfield):
         StartVideo(str(modul_2_textfield), str(modul_5_textfield), str(modul_7_textfield),
                    str(modul_9_textfield), str(modul_11_textfield))
