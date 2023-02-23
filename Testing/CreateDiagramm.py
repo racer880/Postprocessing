@@ -1,56 +1,51 @@
-import tkinter as tk
-from tkinter import filedialog
 import pandas as pd
 import matplotlib.pyplot as plt
-
-class CreateDiagramm:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Excel Chart App")
-
-        # Create a button to open the file dialog
-        self.browse_button = tk.Button(text="Browse", command=self.browse_file)
-        self.browse_button.pack()
-
-        # Create a label to display the selected file
-        self.file_label = tk.Label(text="No file selected")
-        self.file_label.pack()
-
-        # Create a button to plot the chart
-        self.plot_button = tk.Button(text="Plot Chart", command=self.plot_chart, state=tk.DISABLED)
-        self.plot_button.pack()
-
-    def browse_file(self):
-        # Open a file dialog and get the selected file's path
-        file_path = filedialog.askopenfilename()
-
-        # Update the label to display the selected file
-        self.file_label.config(text=file_path)
-
-        # Enable the plot button
-        self.plot_button.config(state=tk.NORMAL)
-
-    def plot_chart(self):
-        # Read the Excel file into a Pandas DataFrame
-        df = pd.read_excel(self.file_label['text'])
-
-        # Select the first sheet in the Excel file
-        sheet = df.iloc[:, 0]
-
-        # Get the values and labels for the bar chart
-        values = sheet.values
-        labels = sheet.index
-
-        # Clear any previous plots
-        plt.clf()
-
-        # Create the bar chart
-        plt.bar(labels, values)
-        plt.xlabel('Labels')
-        plt.ylabel('Values')
-        plt.title('Bar Chart')
-
-        # Display the chart
-        plt.show()
+import tkinter as tk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
+# Load Excel sheet into a pandas DataFrame
+data = pd.read_excel('..\Files\Examples.xlsx', sheet_name='Sheet1')
+
+# Extract three diagrams from the DataFrame
+fig1, ax1 = plt.subplots()
+data.plot(x='Column1', y='Column2', ax=ax1)
+
+fig2, ax2 = plt.subplots()
+data.plot(x='Column1', y='Column3', ax=ax2)
+
+fig3, ax3 = plt.subplots()
+data.plot(x='Column1', y='Column4', ax=ax3)
+
+# Create tkinter GUI
+root = tk.Tk()
+root.title('Live View of Diagrams')
+
+# Create matplotlib FigureCanvasTkAgg objects for the three diagrams
+canvas1 = FigureCanvasTkAgg(fig1, master=root)
+canvas1.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+
+canvas2 = FigureCanvasTkAgg(fig2, master=root)
+canvas2.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+
+canvas3 = FigureCanvasTkAgg(fig3, master=root)
+canvas3.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+
+# Define start and stop functions for the live view
+def start():
+    canvas1.draw()
+    canvas2.draw()
+    canvas3.draw()
+
+def stop():
+    root.quit()
+
+# Create tkinter buttons for starting and stopping the live view
+start_button = tk.Button(root, text='Start', command=start)
+start_button.pack(side=tk.LEFT)
+
+stop_button = tk.Button(root, text='Stop', command=stop)
+stop_button.pack(side=tk.RIGHT)
+
+# Run the tkinter main loop
+root.mainloop()
