@@ -23,10 +23,11 @@ class StartVideo():
 
 
         cap = [cv2.VideoCapture(i) for i in names]
-
+        #cv2.set(cv2.CAP_PROP_BUFFERSIZE, 2)
         frames = [None] * len(names);
         gray = [None] * len(names);
         ret = [None] * len(names);
+        res = [None] * len(names);
 
         while True:
 
@@ -36,10 +37,11 @@ class StartVideo():
 
             for i, f in enumerate(frames):
                 if ret[i] is True:
-                    gray[i] = cv2.cvtColor(f, cv2.COLOR_BGR2GRAY)
+                    gray[i] = cv2.resize(f, (938, 550))
+                    #gray[i] = cv2.cvtColor(f, cv2.COLOR_BGR2RGB)
                     cv2.imshow(window_titles[i], gray[i]);
 
-            if cv2.waitKey(10) & 0xFF == ord('q'):
+            if cv2.waitKey(30) & 0xFF == ord('q'):
                 break
 
         for c in cap:

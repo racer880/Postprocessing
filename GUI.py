@@ -2,11 +2,9 @@ import os
 import tkinter as tk
 from tkinter import ttk, filedialog
 from CreatePath import CreatePath
-from Testing.Datenbankgui import Datenbankgui
 from Testing.CreateDiagramm import CreateDiagramm
 from Testing.StartVideo import StartVideo
-from Testing.datenbank import DB
-from PIL import Image, ImageTk
+
 
 
 class GUI(tk.Tk):
@@ -295,10 +293,10 @@ class GUI(tk.Tk):
 
         # testvariable
         current_file = os.getcwd()
-        videoname_1 = "Test.mp4"
-        videoname_2 = "Test_2.mp4"
-        videoname_3 = "Test_3.mp4"
-        videoname_4 = "Test_4.mp4"
+        videoname_1 = "Test.MP4"
+        videoname_2 = "Test_2.MP4"
+        videoname_3 = "Test_3.MP4"
+        videoname_4 = "Test_4.mkv"
 
         # Title
         title_label = ttk.Label(self, text="Konservierter Versuch durchführen", font=("Didot", 24), background="grey")
