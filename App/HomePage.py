@@ -1,7 +1,7 @@
 import tkinter as tk
 from PIL import ImageTk, Image
 from CreatePath import CreatePath
-import numpy as np
+from CreateDiagram import CreateDiagram
 
 buttons = []
 
@@ -84,7 +84,8 @@ class HomePage(tk.Frame):
         if app_num == 1:
             print(f"App {app_num} clicked")
         if app_num == 2:
-            print(f"App {app_num} clicked")
+            self.forget_buttons(app_num)
+            CreateDiagram(self, self.parent, buttons).grid(row=0, column=0)
         if app_num == 3:
             self.forget_buttons(app_num)
             CreatePath(self, self.parent, buttons).grid(row=0, column=0)

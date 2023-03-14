@@ -14,7 +14,7 @@ if __name__ == '__main__':
     root = tk.Tk()
     root.configure(bg='gray')
     app = App(root)
-    app.grid(row=5, column=4)
+    app.grid(row=10, column=10)
 
     root.geometry("1420x1080")
     root.mainloop()
