@@ -29,6 +29,7 @@ class App:
                         , "App 5", "App 6", "App 7", "App 8"
                         , "App 9", "App 10", "App 11", "App 12"
                         , "App 13", "App 14", "App 15", "Release Notes"]
+
         # Create a 4x4 grid of buttons with different images
         for i in range(4):
             for j in range(4):

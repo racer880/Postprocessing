@@ -1,7 +1,8 @@
 import tkinter as tk
 from PIL import ImageTk, Image
 from CreatePath import CreatePath
-from CreateDiagram import CreateDiagram
+from CreateDiagramMatplotlib import CreateDiagramMatplotlib
+from CreateDiagramMatlab import CreateDiagramMatlab
 
 buttons = []
 
@@ -25,34 +26,34 @@ class HomePage(tk.Frame):
         self.title_label.grid(row=0, column=1, columnspan=4, pady=40)
 
         # Create a list of image filenames and button names
-        image_filenames = ["../Images/Package.png",
-                           "../Images/Diagramm.png",
-                           "../Images/Directory.png",
-                           "../Images/Video.png",
+        image_filenames = ["../Images/Directory.png",
                            "../Images/Excel.png",
-                           "../Images/Ressource.png",
+                           "../Images/Python_Dok.png",
+                           "../Images/Matlab.png",
+                           "../Images/Metadaten.png",
                            "../Images/Question.png",
                            "../Images/Question.png",
                            "../Images/Question.png",
-                           "../Images/Question.png",
-                           "../Images/Question.png",
+                           "../Images/Video.png",
                            "../Images/Hinzufuegen.png",
+                           "../Images/Package.png",
+                           "../Images/Ressource.png",
                            "../Images/Earthquake.png",
                            "../Images/Bridge.png",
                            "../Images/Appartment.png",
                            "../Images/Notes.png"]
         button_names = ["Sensor-Inventarliste",
-                        "Diagramm erstellen",
-                        "Ordnerstruktur erstellen",
-                        "Video starten",
                         "Spalten zusammenführen",
-                        "Projektressourcen",
+                        "Diagramm erstellen (Matplotlib)",
+                        "Diagramm erstellen (MATLAB)",
+                        "Metadaten auslesen",
+                        "App 6",
                         "App 7",
                         "App 8",
-                        "App 9",
-                        "App 10",
-                        "App 11",
+                        "Video starten",
                         "Geräte hinzufügen",
+                        "Sensor-Inventarliste",
+                        "Projektressourcen",
                         "Projekt: Gleitschubversagen",
                         "Projekt: Hinterrhein",
                         "Projekt: Lysbüchel",
@@ -82,10 +83,15 @@ class HomePage(tk.Frame):
         # This function will be called when a button is clicked
         print(f"App {app_num} clicked")
         if app_num == 1:
-            print(f"App {app_num} clicked")
+            self.forget_buttons(app_num)
+            CreatePath(self, self.parent, buttons).grid(row=0, column=0)
         if app_num == 2:
             self.forget_buttons(app_num)
-            CreateDiagram(self, self.parent, buttons).grid(row=0, column=0)
+            CreateDiagramMatplotlib(self, self.parent, buttons).grid(row=0, column=0)
         if app_num == 3:
             self.forget_buttons(app_num)
             CreatePath(self, self.parent, buttons).grid(row=0, column=0)
+        if app_num == 4:
+            self.forget_buttons(app_num)
+            CreateDiagramMatlab(self, self.parent, buttons).grid(row=0, column=0)
+
