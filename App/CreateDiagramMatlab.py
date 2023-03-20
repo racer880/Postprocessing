@@ -14,6 +14,13 @@ font_name_text = "Arial"
 sheet_names = []
 
 
+def create_diagram(a, b, c, d, e, f, g):
+    print(type(a))
+    print(type(b))
+    eng = matlab.engine.start_matlab()
+    eng.cd(r'C:\Users\patrick.grubert\Downloads\Git\PostProcessing\Postprocessing\Files', nargout=0)
+    getattr(eng, 'Diagram_Template')(a, b, c, d, e, f, g, nargout=0)
+
 class CreateDiagramMatlab(tk.Frame):
     def __init__(self, parent, master_class, buttons):
         tk.Frame.__init__(self, parent)
@@ -33,23 +40,21 @@ class CreateDiagramMatlab(tk.Frame):
 
     def create_gui_new(self, buttons):
         # Create a list of labels and textfield
-        label_names = ["Pfad x-Achse:",
-                       "Pfad Diagramm 1:",
-                       "Pfad Diagramm 2:",
-                       "Pfad Diagramm 3:",
-                       "Parameter 1:",
-                       "Parameter 2:",
-                       "Parameter 3:",
-                       "Parameter 4:"
+        label_names = ["Diagrammtitel:",
+                       "Anfangswert X-Achse:",
+                       "Endwert X-Achse",
+                       "Schrittweite/pro cm X-Achse",
+                       "Anfangswert Y-Achse:",
+                       "Endwert Y-Achse",
+                       "Schrittweite/pro cm Y-Achse",
                        ]
-        textfield_names = ["0",
-                           "0",
-                           "0",
-                           "0",
-                           "0",
-                           "0",
-                           "0",
-                           "0"]
+        textfield_names = ["T",
+                           -2.0,
+                            2.0,
+                            0.2,
+                           -1,
+                            1,
+                           0.2]
         list_of_textfield = []
 
         # Title
@@ -71,19 +76,16 @@ class CreateDiagramMatlab(tk.Frame):
             list_of_textfield.append(self.textfield)
 
         # Create folder button
-        self.info_button = tk.Button(self, text="Erstellen", width=50, height=5, command=self.create_diagram)
+        self.info_button = tk.Button(self, text="Erstellen", width=50, height=5, command=lambda: create_diagram(
+            list_of_textfield[0].get(), float(list_of_textfield[1].get()), float(list_of_textfield[2].get()),
+            float(list_of_textfield[3].get()), float(list_of_textfield[4].get()), float(list_of_textfield[5].get()),
+            float(list_of_textfield[6].get())))
         self.info_button.grid(column=1, row=10, padx=5, pady=y_space, sticky=tk.NS)
 
         # Back to Homepage
         self.info_button = tk.Button(self, text="Zurück", width=50, height=5,
                                      command=lambda: self.back_to_homepage(buttons))
         self.info_button.grid(column=2, row=10, padx=5, pady=y_space, sticky=tk.NS, columnspan=2)
-
-    def create_diagram(self):
-        #eng = matlab.engine.start_matlab()
-        #eng.cd(r'C:\Users\patrick.grubert\Downloads\Git\PostProcessing\Postprocessing\Files', nargout=0)
-        #eng.Diagram_Template('Test', -20, 20, 5, -1, 1, 1)
-        pass
 
     def browse_file(self, sheet_option):
         global file_path, sheet_name

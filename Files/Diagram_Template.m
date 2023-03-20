@@ -1,24 +1,24 @@
 function Diagram_Template(a, b, c, d, e, f, g)
 
     % Allgemeine Parameter
-    %Plot_title = 'Template Diagrammerstellung';
+    % Plot_title = 'Template Diagrammerstellung';
     Plot_title = a;
     
     % Parameter auf x-Achse
-    % Min_Wert_x_Achse = -20;
-    % Max_Wert_x_Achse = 20;
-    % Anzahl_Werte_pro_cm_x_Achse = 5;
-    Min_Wert_x_Achse = b;
-    Max_Wert_x_Achse = c;
-    Anzahl_Werte_pro_cm_x_Achse = d;
+     % Min_Wert_x_Achse = -20;
+     % Max_Wert_x_Achse = 20;
+     % Anzahl_Werte_pro_cm_x_Achse = 5;
+     Min_Wert_x_Achse = b;
+     Max_Wert_x_Achse = c;
+     Anzahl_Werte_pro_cm_x_Achse = d;
    
     % Parameter auf y-Achse
-    % Min_Wert_y_Achse = -1;
-    % Max_Wert_y_Achse = 1;
-    % Anzahl_Werte_pro_cm_y_Achse = 0.5;
-    Min_Wert_y_Achse = e;
-    Max_Wert_y_Achse = f;
-    Anzahl_Werte_pro_cm_y_Achse = g;
+     % Min_Wert_y_Achse = -1;
+     % Max_Wert_y_Achse = 1;
+     % Anzahl_Werte_pro_cm_y_Achse = 0.5;
+     Min_Wert_y_Achse = e;
+     Max_Wert_y_Achse = f;
+     Anzahl_Werte_pro_cm_y_Achse = g;
 
     % Parameter - Platzhalter am Rand des Dokuments
     buffer = 5;
@@ -50,4 +50,12 @@ function Diagram_Template(a, b, c, d, e, f, g)
     
     % Set the size of the figure in centimeters
     set(fig, 'Units', 'centimeters', 'Position', [0, 0, groesse_x_Achse + buffer, groesse_y_Achse + buffer]);
+    set(fig,'Visible', 'on');
+    
+    c = clock;
+    c(1,6) = uint8(c(1,6));
+    savetitle = [num2str(Plot_title), '_' , num2str(c(1,1)) , '_', num2str(c(1,2)) , '_', num2str(c(1,3)) , '_', num2str(c(1,4)), '_', num2str(c(1,5)), '_',num2str(c(1,6))];
+    savetitle = savetitle(~isspace(savetitle));
+    saveas(gcf,savetitle);
+    
 end

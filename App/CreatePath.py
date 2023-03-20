@@ -9,7 +9,7 @@ font_name_title = "Arial bold"
 font_name_text = "Arial"
 
 
-def build_path(path, directory_folder, sub_folder_1, sub_folder_2, sub_folder_3, sub_folder_4, sub_folder_5):
+def build_path(path, directory_folder, sub_folder_1, sub_folder_2, sub_folder_3, sub_folder_4, sub_folder_5, sub_folder_6):
     try:
         os.makedirs(path + '/' + directory_folder)
     except FileExistsError:
@@ -47,6 +47,13 @@ def build_path(path, directory_folder, sub_folder_1, sub_folder_2, sub_folder_3,
     if sub_folder_5 is not None:
         try:
             os.makedirs(path + '/' + directory_folder + '/' + sub_folder_5)
+        except FileExistsError:
+            print("Sub folder 5 already create!")
+            pass
+
+    if sub_folder_6 is not None:
+        try:
+            os.makedirs(path + '/' + directory_folder + '/' + sub_folder_6)
         except FileExistsError:
             print("Sub folder 5 already create!")
             pass
@@ -115,7 +122,7 @@ class CreatePath(tk.Frame):
         self.info_button = tk.Button(self, text="Erstellen", width=50, height=5, command=lambda: build_path(
             list_of_textfield[0].get(), list_of_textfield[1].get(), list_of_textfield[2].get(),
             list_of_textfield[3].get(), list_of_textfield[4].get(), list_of_textfield[5].get(),
-            list_of_textfield[6].get()))
+            list_of_textfield[6].get(), list_of_textfield[7].get()))
         self.info_button.grid(column=1, row=10, padx=5, pady=y_space, sticky=tk.NS)
 
         # Back to Homepage
