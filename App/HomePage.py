@@ -42,7 +42,7 @@ class HomePage(tk.Frame):
                            "../Images/Bridge.png",
                            "../Images/Appartment.png",
                            "../Images/Notes.png"]
-        button_names = ["Sensor-Inventarliste",
+        button_names = ["Projektpfad erstellen",
                         "Spalten zusammenführen",
                         "Diagramm erstellen (Matplotlib)",
                         "Diagramm erstellen (MATLAB)",

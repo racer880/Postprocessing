@@ -16,5 +16,6 @@ if __name__ == '__main__':
     app = App(root)
     app.grid(row=10, column=10)
 
-    root.geometry("1420x1080")
+    root.geometry("1820x1080")
+    root.title("Post Processing (v0.2)")
     root.mainloop()
