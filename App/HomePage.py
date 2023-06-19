@@ -4,6 +4,7 @@ from CreatePath import CreatePath
 from CreateDiagramMatplotlib import CreateDiagramMatplotlib
 from CreateDiagramMatlab import CreateDiagramMatlab
 from ExcelColumnMerger import ExcelColumnMerger
+from ExcelToSQLiteMigrator import ExcelToSQLiteMigrator
 
 buttons = []
 
@@ -29,7 +30,7 @@ class HomePage(tk.Frame):
         # Create a list of image filenames and button names
         image_filenames = ["../Images/Directory.png",
                            "../Images/Excel.png",
-                           "../Images/Python_Dok.png",
+                           "../Images/SQLite.png",
                            "../Images/Matlab.png",
                            "../Images/Metadaten.png",
                            "../Images/Question.png",
@@ -45,7 +46,7 @@ class HomePage(tk.Frame):
                            "../Images/Notes.png"]
         button_names = ["Projektpfad erstellen",
                         "Spalten zusammenführen",
-                        "Diagramm erstellen (Matplotlib)",
+                        "Excel zu Datenbank Konverter",
                         "Diagramm erstellen (MATLAB)",
                         "Metadaten auslesen",
                         "App 6",
@@ -91,7 +92,7 @@ class HomePage(tk.Frame):
             ExcelColumnMerger(self, self.parent, buttons).grid(row=0, column=0)
         if app_num == 3:
             self.forget_buttons(app_num)
-            CreatePath(self, self.parent, buttons).grid(row=0, column=0)
+            ExcelToSQLiteMigrator(self, self.parent, buttons).grid(row=0, column=0)
         if app_num == 4:
             self.forget_buttons(app_num)
             CreateDiagramMatlab(self, self.parent, buttons).grid(row=0, column=0)
