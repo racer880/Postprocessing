@@ -1,10 +1,6 @@
 import tkinter as tk
-from tkinter import filedialog, messagebox
-import pandas as pd
-import openpyxl
-import matplotlib.pyplot as plt
-import matlab.engine
 import subprocess
+import sys,os
 
 # Parameter
 font_size_title = 24
@@ -21,10 +17,10 @@ def create_diagram():
     #getattr(eng, "excelColumnMerger")(nargout=0)
 
     # Pfad zum MATLAB-Skript
-    matlab_script_path = r"C:\Users\patrick.grubert\Downloads\Git\PostProcessing\Postprocessing\Files\excelColumnMerger.m"
+    current_dir = os.getcwd()
+    relative_path = os.path.join(current_dir, "Files", r"excelColumnMerger.m")
     # Aufruf des MATLAB-Skripts
-    subprocess.call(["matlab", "-nodesktop", "-nosplash", "-r", f"run('{matlab_script_path}'); input('Press Enter to exit');"])
-
+    subprocess.call(["matlab", "-nodesktop", "-nosplash", "-r", f"run('{relative_path}'); input('Press Enter to exit');"])
 class ExcelColumnMerger(tk.Frame):
     def __init__(self, parent, master_class, buttons):
         tk.Frame.__init__(self, parent)
