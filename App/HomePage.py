@@ -3,6 +3,7 @@ from PIL import ImageTk, Image
 from CreatePath import CreatePath
 from CreateDiagramMatplotlib import CreateDiagramMatplotlib
 from CreateDiagramMatlab import CreateDiagramMatlab
+from ExcelColumnMerger import ExcelColumnMerger
 
 buttons = []
 
@@ -87,7 +88,7 @@ class HomePage(tk.Frame):
             CreatePath(self, self.parent, buttons).grid(row=0, column=0)
         if app_num == 2:
             self.forget_buttons(app_num)
-            CreateDiagramMatplotlib(self, self.parent, buttons).grid(row=0, column=0)
+            ExcelColumnMerger(self, self.parent, buttons).grid(row=0, column=0)
         if app_num == 3:
             self.forget_buttons(app_num)
             CreatePath(self, self.parent, buttons).grid(row=0, column=0)

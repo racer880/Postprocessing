@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 import openpyxl
 import matlab.engine
+import subprocess
+
 
 # Parameter
 font_size_title = 24
@@ -49,9 +51,13 @@ def create_diagram(template_path, template_name, save_path, excel_path, excel_pa
         eng.cd(template_path, nargout=0)
         getattr(eng, template_name)(save_path, excel_path, title, b, c, d, e, f, g, nargout=0)
     if template_name == 'X_Achse_als_Referenz':
-        eng = matlab.engine.start_matlab(template_path)
-        eng.cd(template_path, nargout=0)
-        getattr(eng, template_name)(excel_path, nargout=0)
+       # eng = matlab.engine.start_matlab(template_path)
+        #eng.cd(template_path, nargout=0)
+        #getattr(eng, template_name)(excel_path, nargout=0)
+        # Pfad zum MATLAB-Skript
+        matlab_script_path = r"C:\Users\patrick.grubert\Downloads\Git\PostProcessing\Postprocessing\Files\X_Achse_als_Referenz.m"
+        # Aufruf des MATLAB-Skripts
+        subprocess.call(["matlab", "-nodesktop", "-nosplash", "-r", f"run('{matlab_script_path}'); input('Press Enter to exit');"])
 
 
 class CreateDiagramMatlab(tk.Frame):
