@@ -32,9 +32,9 @@ label_names = ["Template - Pfad",
                "Anfangs-/Endwert /Schrittweite X-Achse:",
                "Anfangs-/Endwert /Schrittweite Y-Achse:"
                ]
-textfield_names = [r'C:\Users\patrick.grubert\Downloads\Git\PostProcessing\Postprocessing\Files',
+textfield_names = [r'C:\Users\patrick.grubert\Downloads\Git\PostProcessing\Postprocessing\App\Files',
                    'X_Achse_als_Referenz',
-                   r'C:\Users\patrick.grubert\Downloads\Git\PostProcessing\Postprocessing\Files',
+                   r'C:\Users\patrick.grubert\Downloads\Git\PostProcessing\Postprocessing\App\Files',
                    r' ',
                    "Beispieltitel",
                    -2.0,
@@ -46,18 +46,15 @@ textfield_names = [r'C:\Users\patrick.grubert\Downloads\Git\PostProcessing\Postp
 
 
 def create_diagram(template_path, template_name, save_path, excel_path, excel_path2, excel_path3, title, b, c, d, e, f, g):
-    if template_name == 'Diagram_Template':
-        eng = matlab.engine.start_matlab()
-        eng.cd(template_path, nargout=0)
-        getattr(eng, template_name)(save_path, excel_path, title, b, c, d, e, f, g, nargout=0)
     if template_name == 'X_Achse_als_Referenz':
        # eng = matlab.engine.start_matlab(template_path)
         #eng.cd(template_path, nargout=0)
         #getattr(eng, template_name)(excel_path, nargout=0)
         # Pfad zum MATLAB-Skript
-        matlab_script_path = r"C:\Users\patrick.grubert\Downloads\Git\PostProcessing\Postprocessing\Files\X_Achse_als_Referenz.m"
+        matlab_script_path = r"C:\Users\patrick.grubert\Downloads\Git\PostProcessing\Postprocessing\App\Files"
+        matlab_script_path_full = template_path + '\\' + template_name
         # Aufruf des MATLAB-Skripts
-        subprocess.call(["matlab", "-nodesktop", "-nosplash", "-r", f"run('{matlab_script_path}'); input('Press Enter to exit');"])
+        subprocess.call(["matlab", "-nodesktop", "-nosplash", "-r", f"run('{matlab_script_path_full(excel_path)}'); input('Press Enter to exit');"])
 
 
 class CreateDiagramMatlab(tk.Frame):

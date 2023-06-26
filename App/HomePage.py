@@ -23,7 +23,7 @@ class HomePage(tk.Frame):
         self.pack(pady=20)
 
         # Create a label for the title
-        self.title_label = tk.Label(self, text="Post-Processing-Tool (v0.2)", font=("Arial bold", 36))
+        self.title_label = tk.Label(self, text="Post-Processing-Tool", font=("Arial bold", 36))
         self.title_label.config(bg="gray")
         self.title_label.grid(row=0, column=1, columnspan=4, pady=40)
 
