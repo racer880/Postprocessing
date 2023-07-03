@@ -5,7 +5,7 @@ from CreatePath import CreatePath
 from CreateDiagramMatlab import CreateDiagramMatlab
 from ExcelColumnMerger import ExcelColumnMerger
 from ExcelToSQLiteMigrator import ExcelToSQLiteMigrator
-
+from UsefulWebsite import UsefulWebsite
 buttons = []
 
 
@@ -30,35 +30,35 @@ class HomePage(tk.Frame):
         # Create a list of image filenames and button names
         image_filenames = ["../Images/Directory.png",
                            "../Images/Excel.png",
-                           "../Images/SQLite.png",
-                           "../Images/Matlab.png",
                            "../Images/Metadaten.png",
+                           "../Images/Matlab.png",
+                           "../Images/VMetadaten.png",
                            "../Images/VideoToPlot.png",
-                           "../Images/Question.png",
-                           "../Images/Question.png",
-                           "../Images/Video.png",
-                           "../Images/Hinzufuegen.png",
+                           "../Images/SQLite.png",
                            "../Images/Package.png",
-                           "../Images/Ressource.png",
-                           "../Images/Earthquake.png",
-                           "../Images/Bridge.png",
-                           "../Images/Appartment.png",
-                           "../Images/Notes.png"]
+                           "../Images/MultiVideo.png",
+                           "../Images/Loading.png",
+                           "../Images/Loading.png",
+                           "../Images/Loading.png",
+                           "../Images/Loading.png",
+                           "../Images/Loading.png",
+                           "../Images/www.png",
+                           "../Images/Release.png",]
         button_names = ["Projektpfad erstellen",
                         "Spalten zusammenführen",
-                        "Excel zu Datenbank Konverter",
+                        "Foto-Metadaten auslesen",
                         "Diagramm erstellen (MATLAB)",
-                        "Metadaten auslesen",
-                        "Plot To Video",
-                        "App 7",
-                        "App 8",
-                        "Video starten",
-                        "Geräte hinzufügen",
-                        "Sensor-Inventarliste",
-                        "Projektressourcen",
-                        "Projekt: Gleitschubversagen",
-                        "Projekt: Hinterrhein",
-                        "Projekt: Lysbüchel",
+                        "Video-Metadaten auslesen",
+                        "Diagramm als .mp4-Datei",
+                        "Excel-Datei/SQLite-Konverter",
+                        "Sensor-Inventarliste visualisieren",
+                        "Mehrere Videos starten",
+                        "Coming Soon",
+                        "Coming Soon",
+                        "Coming Soon",
+                        "Coming Soon",
+                        "Coming Soon",
+                        "Nützliche Websiten",
                         "Release Notes"]
         # Create a 4x4 grid of buttons with different images
         for i in range(4):
@@ -99,4 +99,7 @@ class HomePage(tk.Frame):
         if app_num == 6:
             self.forget_buttons(app_num)
             PlotToVideo(self, self.parent, buttons).grid(row=0, column=0)
+        if app_num == 15:
+            self.forget_buttons(app_num)
+            UsefulWebsite(self, self.parent, buttons).grid(row=0, column=0)
 

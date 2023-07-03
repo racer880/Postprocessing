@@ -18,5 +18,5 @@ if __name__ == '__main__':
 
     root.geometry("1410x980")
     root.resizable(False, False)
-    root.title("Post Processing (v0.2)")
+    root.title("Post-Processing-Tool")
     root.mainloop()
