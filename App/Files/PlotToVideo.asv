@@ -1,11 +1,11 @@
 function PlotToVideo
     % Erstelle die GUI-Figur
-    fig = uifigure('Name', 'Plot to Video - Skript');
+    fig = uifigure('Name', 'Plot to Video');
     fig.Position = [100 100 600 350]; % Setze die Position der Figur
     
     % Erstelle den Titel
-    titleText = uilabel(fig, 'Position', [0 310 600 30]);
-    titleText.Text = 'Plot to Video - Skript';
+    titleText = uilabel(fig, 'Position', [0 310 400 30]);
+    titleText.Text = 'Plot To Video';
     titleText.FontSize = 24;
     titleText.FontWeight = 'bold';
     titleText.HorizontalAlignment = 'center';
@@ -15,18 +15,18 @@ function PlotToVideo
     btnBrowse.ButtonPushedFcn = @browseButtonPushed; % Setze die Callback-Funktion für den Button
     
     % Erstelle das Label für den ausgewählten Dateipfad
-    lblPath = uilabel(fig, 'Position', [220 250 540 22], 'HorizontalAlignment', 'left');
+    lblPath = uilabel(fig, 'Position', [0 250 240 22], 'HorizontalAlignment', 'left');
     lblPath.Text = 'Keine Datei ausgewählt';
     
     % Erstelle das erste Dropdown-Menü
     dropdownColumn1 = uidropdown(fig, 'Position', [20 200 160 22]);
     
     % Erstelle das zweite Dropdown-Menü
-    dropdownColumn2 = uidropdown(fig, 'Position', [220 200 160 22]);
+    dropdownColumn2 = uidropdown(fig, 'Position', [240 200 160 22]);
     
     % Erstelle das Textfeld für die Geschwindigkeit
-    txtSpeedLabel = uilabel(fig, 'Position', [20 150 200 22], 'Text', 'Geschwindigkeit (10ms-1000ms):');
-    txtSpeed = uitextarea(fig, 'Position', [220 150 160 22]);
+    txtSpeedLabel = uilabel(fig, 'Position', [20 150 160 22], 'Text', 'Geschwindigkeit (10ms-1000ms):');
+    txtSpeed = uitextarea(fig, 'Position', [200 150 160 22]);
     txtSpeed.Value = '10'; % Setze den Standardwert auf 100 ms
     
     % Erstelle den "Speicherort"-Button
@@ -34,7 +34,7 @@ function PlotToVideo
     btnOutputPath.ButtonPushedFcn = @outputPathButtonPushed; % Setze die Callback-Funktion für den Button
     
     % Erstelle das Label für den ausgewählten Speicherort
-    lblOutputPath = uilabel(fig, 'Position', [220 100 540 22], 'HorizontalAlignment', 'left');
+    lblOutputPath = uilabel(fig, 'Position', [140 100 240 22], 'HorizontalAlignment', 'left');
     lblOutputPath.Text = 'Kein Speicherort ausgewählt';
     
     % Erstelle den Plot-Button

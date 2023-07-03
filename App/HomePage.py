@@ -1,7 +1,7 @@
 import tkinter as tk
 from PIL import ImageTk, Image
+from PlotToVideo import PlotToVideo
 from CreatePath import CreatePath
-from CreateDiagramMatplotlib import CreateDiagramMatplotlib
 from CreateDiagramMatlab import CreateDiagramMatlab
 from ExcelColumnMerger import ExcelColumnMerger
 from ExcelToSQLiteMigrator import ExcelToSQLiteMigrator
@@ -33,7 +33,7 @@ class HomePage(tk.Frame):
                            "../Images/SQLite.png",
                            "../Images/Matlab.png",
                            "../Images/Metadaten.png",
-                           "../Images/Question.png",
+                           "../Images/VideoToPlot.png",
                            "../Images/Question.png",
                            "../Images/Question.png",
                            "../Images/Video.png",
@@ -49,7 +49,7 @@ class HomePage(tk.Frame):
                         "Excel zu Datenbank Konverter",
                         "Diagramm erstellen (MATLAB)",
                         "Metadaten auslesen",
-                        "App 6",
+                        "Plot To Video",
                         "App 7",
                         "App 8",
                         "Video starten",
@@ -96,4 +96,7 @@ class HomePage(tk.Frame):
         if app_num == 4:
             self.forget_buttons(app_num)
             CreateDiagramMatlab(self, self.parent, buttons).grid(row=0, column=0)
+        if app_num == 6:
+            self.forget_buttons(app_num)
+            PlotToVideo(self, self.parent, buttons).grid(row=0, column=0)
 
