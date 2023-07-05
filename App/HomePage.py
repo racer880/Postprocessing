@@ -6,6 +6,7 @@ from ReadFotoMetadata import  ReadFotoMetadata
 from CreateDiagramMatlab import CreateDiagramMatlab
 from ReadVideoMetadata import ReadVideoMetadata
 from ExcelColumnMerger import ExcelColumnMerger
+from MultipleVideoStart import MultipleVideoStart
 from ExcelToSQLiteMigrator import ExcelToSQLiteMigrator
 from UsefulWebsite import UsefulWebsite
 buttons = []
@@ -104,6 +105,9 @@ class HomePage(tk.Frame):
         if app_num == 6:
             self.forget_buttons(app_num)
             PlotToVideo(self, self.parent, buttons).grid(row=0, column=0)
+        if app_num == 9:
+            self.forget_buttons(app_num)
+            MultipleVideoStart(self, self.parent, buttons).grid(row=0, column=0)
         if app_num == 15:
             self.forget_buttons(app_num)
             UsefulWebsite(self, self.parent, buttons).grid(row=0, column=0)

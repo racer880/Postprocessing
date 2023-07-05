@@ -36,10 +36,8 @@ class PlotToVideo(tk.Frame):
 
     def create_gui_new(self, buttons):
 
-        # Titl
-
-        self.title_label = tk.Label(self, text="Plot to Video - Konverter", font=(font_name_title, font_size_title),
-                                    background="grey")
+        # Title
+        self.title_label = tk.Label(self, text="Plot to Video - Konverter", font=(font_name_title, font_size_title),background="grey")
         self.title_label.grid(column=3, row=0, padx=520, pady=2 * y_space, sticky=tk.NSEW, columnspan=6)
 
 

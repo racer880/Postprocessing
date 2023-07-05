@@ -55,7 +55,7 @@ class ReadFotoMetadata(tk.Frame):
         self.folder_button.grid(column=4, row=2, padx=5, pady=2 * y_space, sticky=tk.NSEW)
 
         # Metadaten auslesen und speichern
-        self.read_button = tk.Button(self, text="Metadaten auslesen", width=50,height=5, command=self.read_metadata)
+        self.read_button = tk.Button(self, text="Metadaten auslesen", width=50, height=5, command=self.read_metadata)
         self.read_button.grid(column=1, row=3, padx=5, pady=2 * y_space, sticky=tk.EW)
 
         # Back to Homepage
