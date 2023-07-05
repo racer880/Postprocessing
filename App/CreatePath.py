@@ -4,7 +4,7 @@ import os
 # Parameter
 font_size_title = 24
 font_size_text = 14
-y_space = 30
+y_space = 25
 font_name_title = "Arial bold"
 font_name_text = "Arial"
 

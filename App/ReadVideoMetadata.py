@@ -1,9 +1,9 @@
 import os
 import glob
 import openpyxl
-from PIL import Image
 import tkinter as tk
 from tkinter import filedialog
+from moviepy.editor import VideoFileClip
 
 # Parameter
 font_size_title = 24
@@ -13,7 +13,7 @@ font_name_title = "Arial bold"
 font_name_text = "Arial"
 sheet_names = []
 
-class ReadFotoMetadata(tk.Frame):
+class ReadVideoMetadata(tk.Frame):
     def __init__(self, parent, master_class, buttons):
         tk.Frame.__init__(self, parent)
         self.parent = parent
@@ -21,10 +21,11 @@ class ReadFotoMetadata(tk.Frame):
         self.config(bg='gray')
         self.excel_file_path = tk.StringVar()
         self.folder_path = tk.StringVar()
-        self.photo_file_paths = []
+        self.video_file_paths = []
 
         self.construct_grid()
         self.create_widgets(buttons)
+
 
     def construct_grid(self):
         # configure the grid
@@ -35,7 +36,7 @@ class ReadFotoMetadata(tk.Frame):
 
     def create_widgets(self, buttons):
 
-        self.title_label = tk.Label(self, text="Metadaten von Fotos auslesen", font=(font_name_title, font_size_title),background="grey")
+        self.title_label = tk.Label(self, text="Metadaten von Videos auslesen", font=(font_name_title, font_size_title),background="grey")
         self.title_label.grid(column=0, row=0, padx=520, pady=2 * y_space, sticky=tk.NSEW, columnspan=6)
 
         # Excel-Datei auswählen
@@ -76,7 +77,7 @@ class ReadFotoMetadata(tk.Frame):
                                        background="grey")
 
         self.infobox2_label.grid(column=0, row=6, padx=50, pady=y_space, sticky=tk.W, columnspan=8)
-        self.infobox3_label = tk.Label(self, text=" - Ziel der App: Metadaten von Fotos auslesen", font=(font_name_title, font_size_text), background="grey")
+        self.infobox3_label = tk.Label(self, text=" - Ziel der App: Metadaten von Videos auslesen", font=(font_name_title, font_size_text), background="grey")
         self.infobox3_label.grid(column=0, row=7, padx=50, pady= y_space, sticky=tk.W, columnspan=8)
 
     def select_excel_file(self):
@@ -86,7 +87,7 @@ class ReadFotoMetadata(tk.Frame):
     def select_folder(self):
         folder_path = filedialog.askdirectory()
         self.folder_path.set(folder_path)
-        self.photo_file_paths = glob.glob(f"{folder_path}/*.jpg") + glob.glob(f"{folder_path}/*.jpeg") + glob.glob(f"{folder_path}/*.png")
+        self.video_file_paths = glob.glob(f"{folder_path}/*.mp4") + glob.glob(f"{folder_path}/*.mov")
 
     def read_metadata(self):
         excel_file_path = self.excel_file_path.get()
@@ -100,30 +101,19 @@ class ReadFotoMetadata(tk.Frame):
                 # Füge die Überschriften hinzu, wenn die Excel-Datei leer ist
                 if ws.max_row == 1 and ws.max_column == 1 and ws.cell(row=1, column=1).value is None:
                     ws.cell(row=1, column=1, value="Dateiname")
-                    ws.cell(row=1, column=2, value="Datum")
-                    ws.cell(row=1, column=3, value="Kameramodell")
-                    ws.cell(row=1, column=4, value="Dateigröße")
-                    ws.cell(row=1, column=5, value="Belichtungszeit")
-                    ws.cell(row=1, column=6, value="Verschlusszeit")
-                    ws.cell(row=1, column=7, value="Brennweite")
+                    ws.cell(row=1, column=2, value="Dauer")
+                    ws.cell(row=1, column=3, value="Bildgröße")
+                    ws.cell(row=1, column=4, value="Codec")
+                    ws.cell(row=1, column=5, value="Bildrate")
+                    ws.cell(row=1, column=6, value="Datum")
 
                 # Finde die nächste leere Zeile
                 next_row = ws.max_row + 1
 
-                duplicate_count = 0  # Anzahl der doppelten Dateien
+                duplicate_count = 0
 
-                for photo_file_path in self.photo_file_paths:
-                    image = Image.open(photo_file_path)
-                    exif_data = image._getexif()
-
-                    camera_model = exif_data.get(272, "-")
-                    date_time = exif_data.get(306, "-")
-                    file_size = os.path.getsize(photo_file_path)
-                    exposure_time = exif_data.get(33434, "-")
-                    shutter_speed = exif_data.get(37377, "-")
-                    focal_length = exif_data.get(37386, "-")
-
-                    file_title = os.path.basename(photo_file_path)
+                for video_file_path in self.video_file_paths:
+                    file_title = os.path.basename(video_file_path)
 
                     # Überprüfe, ob der Dateiname bereits vorhanden ist
                     for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=1, max_col=1):
@@ -131,22 +121,42 @@ class ReadFotoMetadata(tk.Frame):
                             duplicate_count += 1
                             break
                     else:
-                        # Schreibe die Metadaten in die entsprechenden Spalten
-                        ws.cell(row=next_row, column=1, value=file_title)
-                        ws.cell(row=next_row, column=2, value=date_time)
-                        ws.cell(row=next_row, column=3, value=camera_model)
-                        ws.cell(row=next_row, column=4, value=file_size)
-                        ws.cell(row=next_row, column=5, value=str(exposure_time))
-                        ws.cell(row=next_row, column=6, value=str(shutter_speed))
-                        ws.cell(row=next_row, column=7, value=str(focal_length))
-                        next_row += 1
+                        try:
+                            video = VideoFileClip(video_file_path)
+
+                            duration = video.duration
+                            size = os.path.getsize(video_file_path)
+                            codec = video.reader.infos.get('video_codec_name', "-")
+                            frame_rate = video.fps if hasattr(video, 'fps') else "-"
+
+                            # Extrahiere das Erstellungsdatum aus dem Dateinamen
+                            creation_date = self.extract_creation_date(file_title)
+
+                            # Schreibe die Metadaten in die entsprechenden Spalten
+                            ws.cell(row=next_row, column=1, value=file_title)
+                            ws.cell(row=next_row, column=2, value=duration)
+                            ws.cell(row=next_row, column=3, value=size)
+                            ws.cell(row=next_row, column=4, value=codec)
+                            ws.cell(row=next_row, column=5, value=frame_rate)
+                            ws.cell(row=next_row, column=6, value=creation_date)
+                            next_row += 1
+
+                        except Exception as e:
+                            ws.cell(row=next_row, column=1, value=file_title)
+                            ws.cell(row=next_row, column=2, value="-")
+                            ws.cell(row=next_row, column=3, value="-")
+                            ws.cell(row=next_row, column=4, value="-")
+                            ws.cell(row=next_row, column=5, value="-")
+                            ws.cell(row=next_row, column=6, value="-")
+                            next_row += 1
 
                 wb.save(excel_file_path)
                 wb.close()
 
                 if duplicate_count > 0:
-                    self.result_label.config(text=f"Metadaten wurden erfolgreich in die Excel-Datei gespeichert.\n"
-                                                  f"{duplicate_count} doppelte Dateien wurden übersprungen.")
+                    self.result_label.config(
+                        text=f"Metadaten wurden erfolgreich in die Excel-Datei gespeichert.\n"
+                             f"{duplicate_count} doppelte Dateien wurden übersprungen.")
                 else:
                     self.result_label.config(text="Metadaten wurden erfolgreich in die Excel-Datei gespeichert.")
 
@@ -155,6 +165,19 @@ class ReadFotoMetadata(tk.Frame):
 
         else:
             self.result_label.config(text="Bitte wähle sowohl eine Excel-Datei als auch einen Ordner aus.")
+
+    @staticmethod
+    def extract_creation_date(file_name):
+        # Implementiere die Logik zum Extrahieren des Erstellungsdatums aus dem Dateinamen
+        # Hier ein Beispiel, wie das Erstellungsdatum aus dem Format "YYYYMMDD_HHMMSS" extrahiert werden könnte
+        date_str = file_name.split("_")[0]
+        if len(date_str) == 8:
+            year = date_str[:4]
+            month = date_str[4:6]
+            day = date_str[6:8]
+            return f"{day}.{month}.{year}"
+        else:
+            return "-"
 
     def back_to_homepage(self, buttons):
         self.destroy()
@@ -165,3 +188,4 @@ class ReadFotoMetadata(tk.Frame):
             for j in range(4):
                 buttons[k].grid(row=i + 1, column=j + 1, padx=20, pady=20)
                 k = k + 1
+

@@ -30,26 +30,41 @@ class UsefulWebsite(tk.Frame):
 
     def construct_grid(self):
         # configure the grid
-        for i in range(4):
+        for i in range(10):
             self.columnconfigure(i, weight=1)
-        for j in range(11):
+        for j in range(10):
             self.rowconfigure(j, weight=1)
 
     def create_gui_new(self, buttons):
 
-        # Title
-        self.title_label = tk.Label(self, text="Diagramme erstellen", font=(font_name_title, font_size_title),
+        # Titl
+
+        self.title_label = tk.Label(self, text="Nützliche Websiten", font=(font_name_title, font_size_title),
                                     background="grey")
-        self.title_label.grid(column=0, row=0, padx=5, pady=2 * y_space, sticky=tk.EW, columnspan=4)
+        self.title_label.grid(column=3, row=0, padx=520, pady=2 * y_space, sticky=tk.NSEW, columnspan=6)
+
 
         # Create folder button
         self.info_button = tk.Button(self, text="Websiten öffnen", width=50, height=5, command=create_diagram)
-        self.info_button.grid(column=1, row=10, padx=5, pady=y_space, sticky=tk.NS)
+        self.info_button.grid(column=4, row=2, padx=70, pady=y_space, sticky=tk.EW)
 
         # Back to Homepage
-        self.info_button = tk.Button(self, text="Zurück", width=50, height=5,
-                                     command=lambda: self.back_to_homepage(buttons))
-        self.info_button.grid(column=2, row=10, padx=5, pady=y_space, sticky=tk.NS, columnspan=2)
+        self.info_button = tk.Button(self, text="Zurück", width=50, height=5, command=lambda: self.back_to_homepage(buttons))
+        self.info_button.grid(column=6, row=2, padx=5, pady=y_space, sticky=tk.EW)
+
+        # Details
+        self.infobox_label = tk.Label(self, text="________________________________________", font=(font_name_title, font_size_title), background="grey")
+        self.infobox_label.grid(column=2, row=5, padx=0, pady=2 * y_space, sticky=tk.EW, columnspan=8)
+        self.infobox2_label = tk.Label(self, text="Details zur App:", font=(font_name_title, font_size_text), background="grey")
+        self.infobox2_label.grid(column=2, row=6, padx=50, pady= y_space, sticky=tk.W, columnspan=8)
+        self.infobox3_label = tk.Label(self, text=" - Ziel der App: XY-Diagramm als mp4-Datei darstellen", font=(font_name_title, font_size_text), background="grey")
+        self.infobox3_label.grid(column=2, row=7, padx=50, pady= y_space, sticky=tk.W, columnspan=8)
+        self.infobox4_label = tk.Label(self, text="- Ein Punkt folgt dabei das erzeugte Diagramm", font=(font_name_title, font_size_text), background="grey")
+        self.infobox4_label.grid(column=2, row=8, padx=50, pady= y_space, sticky=tk.W, columnspan=8)
+        self.infobox5_label = tk.Label(self, text="- Die Geschwindigkeit zwischen 2 Rohdaten kann zwischen 10-1000 ms eingestellt werden" , font=(font_name_title, font_size_text), background="grey")
+        self.infobox5_label.grid(column=2, row=9, padx=50, pady= y_space, sticky=tk.W, columnspan=8)
+        self.infobox6_label = tk.Label(self, text="- Dringend benötigt: MATLAB-Software", font=(font_name_title, font_size_text), background="grey")
+        self.infobox6_label.grid(column=2, row=10, padx=50, pady=y_space, sticky=tk.W, columnspan=8)
 
     def back_to_homepage(self, buttons):
         self.destroy()

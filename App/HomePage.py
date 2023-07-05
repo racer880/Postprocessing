@@ -2,7 +2,9 @@ import tkinter as tk
 from PIL import ImageTk, Image
 from PlotToVideo import PlotToVideo
 from CreatePath import CreatePath
+from ReadFotoMetadata import  ReadFotoMetadata
 from CreateDiagramMatlab import CreateDiagramMatlab
+from ReadVideoMetadata import ReadVideoMetadata
 from ExcelColumnMerger import ExcelColumnMerger
 from ExcelToSQLiteMigrator import ExcelToSQLiteMigrator
 from UsefulWebsite import UsefulWebsite
@@ -92,10 +94,13 @@ class HomePage(tk.Frame):
             ExcelColumnMerger(self, self.parent, buttons).grid(row=0, column=0)
         if app_num == 3:
             self.forget_buttons(app_num)
-            ExcelToSQLiteMigrator(self, self.parent, buttons).grid(row=0, column=0)
+            ReadFotoMetadata(self, self.parent, buttons).grid(row=0, column=0)
         if app_num == 4:
             self.forget_buttons(app_num)
             CreateDiagramMatlab(self, self.parent, buttons).grid(row=0, column=0)
+        if app_num == 5:
+            self.forget_buttons(app_num)
+            ReadVideoMetadata(self, self.parent, buttons).grid(row=0, column=0)
         if app_num == 6:
             self.forget_buttons(app_num)
             PlotToVideo(self, self.parent, buttons).grid(row=0, column=0)
