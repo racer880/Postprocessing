@@ -1,3 +1,4 @@
+import os
 import tkinter as tk
 from PIL import ImageTk, Image
 from PlotToVideo import PlotToVideo
@@ -33,22 +34,22 @@ class HomePage(tk.Frame):
         self.title_label.grid(row=0, column=1, columnspan=4, pady=40)
 
         # Create a list of image filenames and button names
-        image_filenames = ["../Images/Directory.png",
-                           "../Images/Excel.png",
-                           "../Images/Metadaten.png",
-                           "../Images/Matlab.png",
-                           "../Images/VMetadaten.png",
-                           "../Images/VideoToPlot.png",
-                           "../Images/SQLite.png",
-                           "../Images/Package.png",
-                           "../Images/MultiVideo.png",
-                           "../Images/construct.png",
-                           "../Images/Loading.png",
-                           "../Images/Loading.png",
-                           "../Images/Loading.png",
-                           "../Images/Help.png",
-                           "../Images/www.png",
-                           "../Images/Release.png",]
+        image_filenames = ["/Images/Directory.png",
+                           "/Images/Excel.png",
+                           "/Images/Metadaten.png",
+                           "/Images/Matlab.png",
+                           "/Images/VMetadaten.png",
+                           "/Images/VideoToPlot.png",
+                           "/Images/SQLite.png",
+                           "/Images/Package.png",
+                           "/Images/MultiVideo.png",
+                           "/Images/construct.png",
+                           "/Images/Loading.png",
+                           "/Images/Loading.png",
+                           "/Images/Loading.png",
+                           "/Images/Help.png",
+                           "/Images/www.png",
+                           "/Images/Release.png",]
         button_names = ["Projektpfad erstellen",
                         "Spalten zusammenführen",
                         "Foto-Metadaten auslesen",
@@ -69,7 +70,8 @@ class HomePage(tk.Frame):
         for i in range(4):
             for j in range(4):
                 # Load the image
-                self.image = Image.open(image_filenames[i * 4 + j])
+                current_dir = os.getcwd()
+                self.image = Image.open(current_dir + image_filenames[i * 4 + j])
                 self.image = self.image.resize((130, 130))  # resize the image
                 self.img = ImageTk.PhotoImage(self.image)
 
