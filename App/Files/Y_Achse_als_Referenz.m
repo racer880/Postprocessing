@@ -1,9 +1,9 @@
-function X_Achse_als_Referenz
+function Y_Achse_als_Referenz
     % GUI erstellen
     fig = figure('Name', '2D-Diagramm erstellen', 'Position', [200, 200, 400, 600]);
     
     % Titel der GUI
-    uicontrol('Parent', fig, 'Style', 'text', 'String', 'X-Achse als Referenz', 'Position', [50, 570, 300, 20], 'FontSize', 12, 'FontWeight', 'bold');
+    uicontrol('Parent', fig, 'Style', 'text', 'String', 'Y-Achse als Referenz', 'Position', [50, 570, 300, 20], 'FontSize', 12, 'FontWeight', 'bold');
     
     % Button "Durchsuchen" für Excel-Datei
     uicontrol('Parent', fig, 'Style', 'pushbutton', 'String', 'Durchsuchen', 'Position', [50, 520, 80, 20], 'Callback', @browseExcelFile);
@@ -18,19 +18,19 @@ function X_Achse_als_Referenz
     % Dropdown-Menü für die Spaltenauswahl
     dropdowns = {};
     
-    % X-Achse Dropdown-Menü
-    uicontrol('Parent', fig, 'Style', 'text', 'String', 'X-Achse:', 'Position', [50, 480, 70, 20]);
+    % Y-Achse Dropdown-Menü
+    uicontrol('Parent', fig, 'Style', 'text', 'String', 'Y-Achse:', 'Position', [50, 480, 70, 20]);
     dropdowns{1} = uicontrol('Parent', fig, 'Style', 'popupmenu', 'String', column_names, 'Position', [130, 475, 220, 30]);
     
-    % Anzahl der Y-Achsen Dropdown-Menü
-    uicontrol('Parent', fig, 'Style', 'text', 'String', 'Anzahl der Y-Achsen:', 'Position', [50, 440, 120, 20]);
-    y_axis_num_dropdown = uicontrol('Parent', fig, 'Style', 'popupmenu', 'String', cellstr(num2str((1:10)')), 'Position', [180, 435, 60, 30], 'Value', 10, 'Callback', @updateYAxisDropdowns);
+    % Anzahl der X-Achsen Dropdown-Menü
+    uicontrol('Parent', fig, 'Style', 'text', 'String', 'Anzahl der X-Achsen:', 'Position', [50, 440, 120, 20]);
+    x_axis_num_dropdown = uicontrol('Parent', fig, 'Style', 'popupmenu', 'String', cellstr(num2str((1:10)')), 'Position', [180, 435, 60, 30], 'Value', 10, 'Callback', @updateXAxisDropdowns);
     
-    % Y-Achsen Dropdown-Menüs
-    y_dropdowns = {};
+    % X-Achsen Dropdown-Menüs
+    x_dropdowns = {};
     for i = 1:10
-        uicontrol('Parent', fig, 'Style', 'text', 'String', ['Y' num2str(i) '-Achse:'], 'Position', [50, 400 - (i-1)*30, 70, 20]);
-        y_dropdowns{i} = uicontrol('Parent', fig, 'Style', 'popupmenu', 'String', column_names, 'Position', [130, 395 - (i-1)*30, 220, 30]);
+        uicontrol('Parent', fig, 'Style', 'text', 'String', ['X' num2str(i) '-Achse:'], 'Position', [50, 400 - (i-1)*30, 70, 20]);
+        x_dropdowns{i} = uicontrol('Parent', fig, 'Style', 'popupmenu', 'String', column_names, 'Position', [130, 395 - (i-1)*30, 220, 30]);
     end
     
     % Eingabefeld für Diagrammtitel
@@ -40,17 +40,17 @@ function X_Achse_als_Referenz
     % Button zum Erstellen des Plots
     plot_button = uicontrol('Parent', fig, 'Style', 'pushbutton', 'String', 'Plot erstellen', 'Position', [150, 50, 100, 30], 'Callback', @createPlot);
     
-    % Callback-Funktion zum Aktualisieren der Y-Achsen Dropdown-Menüs
-    function updateYAxisDropdowns(~, ~)
-        % Anzahl der ausgewählten Y-Achsen erhalten
-        y_axis_num = str2double(y_axis_num_dropdown.String{y_axis_num_dropdown.Value});
+    % Callback-Funktion zum Aktualisieren der X-Achsen Dropdown-Menüs
+    function updateXAxisDropdowns(~, ~)
+        % Anzahl der ausgewählten X-Achsen erhalten
+        x_axis_num = str2double(x_axis_num_dropdown.String{x_axis_num_dropdown.Value});
         
-        % Dropdown-Menüs für die Y-Achsen basierend auf der Anzahl aktualisieren
+        % Dropdown-Menüs für die X-Achsen basierend auf der Anzahl aktualisieren
         for i = 1:10
-            if i <= y_axis_num
-                set(y_dropdowns{i}, 'Visible', 'on');
+            if i <= x_axis_num
+                set(x_dropdowns{i}, 'Visible', 'on');
             else
-                set(y_dropdowns{i}, 'Visible', 'off');
+                set(x_dropdowns{i}, 'Visible', 'off');
             end
         end
         
@@ -69,8 +69,8 @@ function X_Achse_als_Referenz
             
             % Dropdown-Menüs für Spaltenauswahl aktualisieren
             set(dropdowns{1}, 'String', column_names);
-            for i = 1:numel(y_dropdowns)
-                set(y_dropdowns{i}, 'String', column_names);
+            for i = 1:numel(x_dropdowns)
+                set(x_dropdowns{i}, 'String', column_names);
             end
             
             % Dateiname anzeigen
@@ -86,18 +86,18 @@ function X_Achse_als_Referenz
             return;
         end
         
-        % Ausgewählte Spalten für X- und Y-Achsen erhalten
-        selected_x_column = dropdowns{1}.Value;
-        selected_y_columns = [];
-        for i = 1:numel(y_dropdowns)
-            if strcmp(y_dropdowns{i}.Visible, 'on')
-                selected_y_columns(end+1) = y_dropdowns{i}.Value;
+        % Ausgewählte Spalten für Y- und X-Achsen erhalten
+        selected_y_column = dropdowns{1}.Value;
+        selected_x_columns = [];
+        for i = 1:numel(x_dropdowns)
+            if strcmp(x_dropdowns{i}.Visible, 'on')
+                selected_x_columns(end+1) = x_dropdowns{i}.Value;
             end
         end
         
         % Daten aus den ausgewählten Spalten lesen
-        x_data = data.(column_names{selected_x_column});
-        y_data = data{:, selected_y_columns};
+        y_data = data.(column_names{selected_y_column});
+        x_data = data{:, selected_x_columns};
         
         % Diagrammtitel erhalten
         diagram_title = get(title_edit, 'String');
@@ -105,10 +105,10 @@ function X_Achse_als_Referenz
         % Plot erstellen und anzeigen
         figure;
         plot(x_data, y_data);
-        xlabel(column_names{selected_x_column});
-        ylabel('Wert');
+        xlabel('Wert');
+        ylabel(column_names{selected_y_column});
         title(diagram_title);
-        legend(column_names(selected_y_columns), 'Location', 'best');
+        legend(column_names(selected_x_columns), 'Location', 'best');
         grid on;
     end
 end
