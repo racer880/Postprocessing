@@ -8,7 +8,9 @@ from ReadVideoMetadata import ReadVideoMetadata
 from ExcelColumnMerger import ExcelColumnMerger
 from MultipleVideoStart import MultipleVideoStart
 from ExcelToSQLiteMigrator import ExcelToSQLiteMigrator
+from HelpVideos import HelpVideos
 from UsefulWebsite import UsefulWebsite
+from Credits import Credits
 buttons = []
 
 
@@ -44,7 +46,7 @@ class HomePage(tk.Frame):
                            "../Images/Loading.png",
                            "../Images/Loading.png",
                            "../Images/Loading.png",
-                           "../Images/Loading.png",
+                           "../Images/Help.png",
                            "../Images/www.png",
                            "../Images/Release.png",]
         button_names = ["Projektpfad erstellen",
@@ -53,14 +55,14 @@ class HomePage(tk.Frame):
                         "Diagramm erstellen (MATLAB)",
                         "Video-Metadaten auslesen",
                         "Diagramm als .mp4-Datei",
-                        "**Excel-Datei/SQLite-Konverter**",
-                        "**Sensor-Inventarliste visualisieren**",
+                        "Excel/SQLite-Konverter(in Bearbeitung)",
+                        "Inventarliste (in Bearbeitung)",
                         "Mehrere Videos starten",
-                        "**Benutzerdefiniertes Diagramm erstellen**",
+                        "Customized Diagramm (in Bearbeitung)",
                         "Coming Soon",
                         "Coming Soon",
                         "Coming Soon",
-                        "Coming Soon",
+                        "Erklärungsvideos",
                         "Nützliche Websiten",
                         "Release Notes"]
         # Create a 4x4 grid of buttons with different images
@@ -108,7 +110,13 @@ class HomePage(tk.Frame):
         if app_num == 9:
             self.forget_buttons(app_num)
             MultipleVideoStart(self, self.parent, buttons).grid(row=0, column=0)
+        if app_num == 14:
+            self.forget_buttons(app_num)
+            HelpVideos(self, self.parent, buttons).grid(row=0, column=0)
         if app_num == 15:
             self.forget_buttons(app_num)
             UsefulWebsite(self, self.parent, buttons).grid(row=0, column=0)
+        if app_num == 16:
+            self.forget_buttons(app_num)
+            Credits(self, self.parent, buttons).grid(row=0, column=0)
 

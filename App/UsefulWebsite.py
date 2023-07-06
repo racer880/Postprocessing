@@ -57,14 +57,11 @@ class UsefulWebsite(tk.Frame):
         self.infobox_label.grid(column=2, row=5, padx=0, pady=2 * y_space, sticky=tk.EW, columnspan=8)
         self.infobox2_label = tk.Label(self, text="Details zur App:", font=(font_name_title, font_size_text), background="grey")
         self.infobox2_label.grid(column=2, row=6, padx=50, pady= y_space, sticky=tk.W, columnspan=8)
-        self.infobox3_label = tk.Label(self, text=" - Ziel der App: XY-Diagramm als mp4-Datei darstellen", font=(font_name_title, font_size_text), background="grey")
+        self.infobox3_label = tk.Label(self, text=" - Ziel der App: Hier werden die relaventen Links beim Klicken aufgerufen", font=(font_name_title, font_size_text), background="grey")
         self.infobox3_label.grid(column=2, row=7, padx=50, pady= y_space, sticky=tk.W, columnspan=8)
-        self.infobox4_label = tk.Label(self, text="- Ein Punkt folgt dabei das erzeugte Diagramm", font=(font_name_title, font_size_text), background="grey")
+        self.infobox4_label = tk.Label(self, text="- Bei fehlenden Installationen können hier die App erreicht werden", font=(font_name_title, font_size_text), background="grey")
         self.infobox4_label.grid(column=2, row=8, padx=50, pady= y_space, sticky=tk.W, columnspan=8)
-        self.infobox5_label = tk.Label(self, text="- Die Geschwindigkeit zwischen 2 Rohdaten kann zwischen 10-1000 ms eingestellt werden" , font=(font_name_title, font_size_text), background="grey")
-        self.infobox5_label.grid(column=2, row=9, padx=50, pady= y_space, sticky=tk.W, columnspan=8)
-        self.infobox6_label = tk.Label(self, text="- Dringend benötigt: MATLAB-Software", font=(font_name_title, font_size_text), background="grey")
-        self.infobox6_label.grid(column=2, row=10, padx=50, pady=y_space, sticky=tk.W, columnspan=8)
+
 
     def back_to_homepage(self, buttons):
         self.destroy()
